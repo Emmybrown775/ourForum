@@ -1,6 +1,6 @@
 from datetime import datetime
 import os
-from flask import Flask, render_template, flash, request, redirect, url_for, session
+from flask import Flask, render_template, flash, request, redirect, url_for, Response
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, UserMixin, LoginManager, login_user, login_required, logout_user
 from flask_sqlalchemy import SQLAlchemy
@@ -170,8 +170,12 @@ def question(question_id):
         )
         db.session.add(new_comment)
         db.session.commit()
+
+        ## Sends Comment to SMS user via SMS
         if not current_question.author.is_online:
-            send_sms([current_question.author.phone_number], comment, SHORT_CODE)
+            message = f"(From: {current_user.username})\n{comment}"
+            send_sms([current_question.author.phone_number], message, SHORT_CODE)
+
         return redirect(url_for("question", question_id=current_question.id))
     else:
         return render_template("open-question.html", question=current_question)
@@ -208,10 +212,10 @@ def receive_sms():
     # Here the server waits for a call from Africa's Talking (The two-way sms provider i worked with) then gets the
     # message and phone number from the message sent to our shortcode. Then saves the question to the database, if the
     # user has already been registered or creates a new user and then posts the message if not.
-
-
-    phone_number = request.values.get("phoneNumber", None),
-    text = request.values.get("text", "default"),
+    data = request.form.to_dict()
+    phone_number = data["from"]
+    text = data["text"]
+    print(phone_number)
     result = db.session.execute(db.select(User).where(User.phone_number == phone_number)).scalar()
     if result is not None:
         user = result
@@ -223,11 +227,12 @@ def receive_sms():
         )
         db.session.add(new_question)
         db.session.commit()
+        return Response(status=200)
     else:
         new_user = User(
             phone_number=phone_number,
             is_online=False,
-            user_name="A random username"
+            username="Sent From SMS"
         )
         db.session.add(new_user)
         db.session.commit()
@@ -243,6 +248,8 @@ def receive_sms():
         db.session.add(new_question)
         db.session.commit()
 
+        return Response(status=200)
+
 
 def send_sms(recipients, message, sender):
     try:
@@ -257,4 +264,4 @@ def send_sms(recipients, message, sender):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=4000)
