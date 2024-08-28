@@ -1,5 +1,5 @@
 from datetime import datetime
-
+import os
 from flask import Flask, render_template, flash, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, UserMixin, LoginManager, login_user, login_required, logout_user
@@ -10,14 +10,14 @@ import africastalking
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
-app.config['SECRET_KEY'] = 'SECRET-KEY'
+app.config['SECRET_KEY'] = os.environ.get('SECRET-KEY')
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 africastalking.initialize(
     username='sandbox',
-    api_key='atsk_8caa859d843559779243a5419a2087682e5c3657ea35e6a61dc2edf4ba2c59171c02bd32'
+    api_key=os.environ.get('API-KEY'),
 )
 
 sms = africastalking.SMS
