@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block body %}
+    <div class="">
+      <div class="row auth-row  gx-0">
+        <div class="col-lg-6 auth-left">
+          <h1 class="mb-4">Welcome back to ourForum!!!</h1>
+          <h3 class="mb-4">Alot of questions are waiting for your suggestions</h3>
+
+          <form action="{{ url_for("login") }}", method="post">
+            <div class="input-group mb-3">
+              <span class="input-group-text">+234</span>
+              <div class="form-floating">
+                <input type="number" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="Phone Number">
+                <label for="phoneNumber">Phone Number</label>
+              </div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+              <label for="password">Password</label>
+            </div>
+              {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+
+
+                                <h6 style="color: red" class="mb-3">{{ messages[0] }}</h6>
+
+                    {% endif %}
+                {% endwith %}
+            <button type="submit" class="primary-button" style="width: 100%;">Login</button>
+          </form>
+        </div>
+
+        <div style="height: 100%;" class="col-lg-6 me-0">
+          <img src="/static/images/Image (1).png" style="object-fit: cover;" alt="" height="100%" width="100%">
+        </div>
+      </div>
+    </div>
+{% endblock %}

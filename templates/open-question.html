@@ -1,0 +1,76 @@
+{% extends "body.html" %}
+{% block content %}
+	          <div class="my-card">
+            <h6 class="mb-1">{{ question.author.username }}</h6>
+            <h6 class="mb-3" style="font-size: 10px">5mins ago</h6>
+            <h5 class="mb-3">{{ question.title }}</h5>
+            <p>
+                {{ question.question }}
+            </p>
+            <div class="bottom-card">
+              <div class="tags">
+                <div class="tag">
+                  <h6 style="font-size: 10px">{{ question.category }}</h6>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="secondary-button">Vote</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 mb-3" style="text-align: center;">
+            <h2>Suggestions</h2>
+          </div>
+
+          <div class="suggestion-form mb-3">
+            <form action="{{ url_for("question", question_id=question.id) }}" method="post">
+                <div class="form-floating">
+                    <label for="suggestions"></label><textarea
+                        style="max-height: 300px"
+                    class="form-control mb-3"
+                    id="suggestions"
+                    placeholder="Your Suggestion"
+                    name="suggestion"
+                  ></textarea>
+                  <label for="phoneNumber">Your Suggestions</label>
+                </div>
+                <div style="width: 100%;" class="bottom-card">
+                <div></div>
+                <div>
+                    <button class="secondary-button">Cancel</button>
+                <button type="submit" class="primary-button">Suggest</button>
+                </div>
+
+            </div>
+            </form>
+
+
+          </div>
+
+
+
+          {% for comment in question.comments %}
+            <div style="{% if comment.author_id == comment.question.author_id %}
+                    border-left: 4px solid #1682FD;
+                    {% endif %}
+                    " class="my-reply-card">
+            <h6 class="mb-1">{{ comment.author.username }}</h6>
+            <h6 class="mb-3" style="font-size: 10px">5mins ago</h6>
+
+            <p>
+                {{ comment.comment }}
+            </p>
+            <div class="bottom-card">
+              <div class="tags">
+
+              </div>
+
+              <div class="actions">
+                <button class="secondary-button">Mark Solved</button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+{% endblock %}

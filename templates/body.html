@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="home">
+    <div class="row m-0">
+        <div
+                class="col-lg-3 col-md-4 d-sm-none d-lg-block d-none d-md-block pt-5 body-side"
+        >
+            <form action="">
+                <div class="input-group mb-3">
+              <span class="input-group-text"
+              ><img src="/static/images/search.svg" alt=""
+              /></span>
+                    <div class="form-floating">
+                        <input
+                                type="search"
+                                class="form-control"
+                                id="search"
+                                placeholder="Search"
+                        />
+                        <label for="phoneNumber">Search</label>
+                    </div>
+                </div>
+            </form>
+
+            <div class="mt-5" style="padding-left: 50px">
+                <h4>MENU</h4>
+            </div>
+
+        <a style="text-decoration: none; color: initial" href="{{ url_for("home") }}">
+            <div class="menu-item {% if request.path == url_for("home") %}
+                     active
+                     {% endif %}">
+                <h5>All Questions</h5>
+            </div>
+        </a>
+
+            {% if current_user.is_authenticated %}
+                <div class="mt-5" style="padding-left: 50px">
+                    <h4>DASHBOARD</h4>
+                </div>
+
+                <a style="text-decoration: none; color: initial" href="{{ url_for("my_questions") }}">
+                    <div class="menu-item
+                    {% if request.path == url_for("my_questions") %}
+                     active
+                     {% endif %}
+">
+                        <h5>My Questions</h5>
+                    </div>
+                </a>
+
+            {% endif %}
+
+        </div>
+
+        <div class="col-lg-6 offset-lg-3 offset-md-4 col-md-8 body-card">
+            {% block content %}
+            	
+            {% endblock %}
+        </div>
+
+        <div class="col-lg-3 offset-lg-0 offset-md-4">
+            <div class="body-side-right">
+                <div>
+                    <div class="tags">
+                        <img src="/static/images/star.svg" alt=""/>
+                        <h6>Must-read posts</h6>
+                    </div>
+                    <hr/>
+                    <ul>
+                        <a href=""
+                        >
+                            <li>Please read rules before using the platform</li>
+                        </a
+                        >
+                        <a href="">
+                            <li>Vision and Strategy of ourForum</li>
+                        </a>
+                    </ul>
+                </div>
+
+                <div class="mt-4">
+                    <div class="tags">
+                        <img src="/static/images/link.svg" alt=""/>
+                        <h6>Featured Links</h6>
+                    </div>
+                    <hr/>
+                    <ul>
+                        <a href="">
+                            <li>ourForum source-code on GitHub</li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

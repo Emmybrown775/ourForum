@@ -1,0 +1,46 @@
+{% extends "body.html" %}
+
+{% block content %}
+	{% for question in questions %}
+                <a style="text-decoration: none; color: initial" href="{{ url_for("question", question_id=question.id) }}">
+                    <div class="my-card" >
+            <h6 class="mb-1">{{ question.author.username }}</h6>
+            <h6 class="mb-3" style="font-size: 10px">5mins ago</h6>
+            <h5 class="mb-3">{{ question.title }}</h5>
+            <p>
+              {{ question.question }}
+            </p>
+            <div class="bottom-card">
+              <div class="tags">
+                <div class="tag">
+                    <h6>{{ question.category }}</h6>
+                </div>
+              </div>
+
+              <div class="actions">
+                <div class="action">
+                  <img
+                    src="/static/images/replies.svg"
+                    alt=""
+                    height="15px"
+                    width="15px"
+                    class="me-2"
+                  />
+                  <h6>125</h6>
+                </div>
+                <div class="action">
+                  <img
+                    src="/static/images/likes.svg"
+                    alt=""
+                    height="15px"
+                    width="15px"
+                    class="me-2"
+                  />
+                  <h6>16</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+                </a>
+    {% endfor %}
+{% endblock %}

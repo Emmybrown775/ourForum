@@ -1,0 +1,43 @@
+{% extends "body.html" %}
+
+{% block content %}
+	<div class="my-card">
+                <form action="{{ url_for("ask_question") }}" method="post">
+                    <select class="form-select mb-3" name="category" id="category">
+                        <option value="home">Home</option>
+                        <option value="education">Education</option>
+                        <option value="finance">Finance</option>
+                    </select>
+
+                    <div class="form-floating mb-3">
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="title"
+                                placeholder="name@example.com"
+                                name="title"
+                        />
+                        <label for="title">Attention Catching Title</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                    <textarea
+
+                            name="question"
+                            class="form-control"
+                            id="question"
+                            placeholder=""
+                    ></textarea>
+                        <label for="question">Type in your Question</label>
+                    </div>
+
+
+                    <div style="width: 100%" class="bottom-card">
+                        <div></div>
+                        <div>
+                            <button class="secondary-button">Cancel</button>
+                            <button type="submit" class="primary-button">Suggest</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+{% endblock %}
