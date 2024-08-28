@@ -86,15 +86,30 @@
                 <h4>MENU</h4>
             </div>
 
-            <div class="menu-item active">
-                <h5>Questions</h5>
+        <a style="text-decoration: none; color: initial" href="{{ url_for("home") }}">
+            <div class="menu-item {% if request.path == url_for("home") %}
+                     active
+                     {% endif %}">
+                <h5>All Questions</h5>
             </div>
-            <div class="menu-item">
-                <h5>Tags</h5>
-            </div>
-            <div class="menu-item">
-                <h5>Rankings</h5>
-            </div>
+        </a>
+
+            {% if current_user.is_authenticated %}
+                <div class="mt-5" style="padding-left: 50px">
+                    <h4>DASHBOARD</h4>
+                </div>
+
+                <a style="text-decoration: none; color: initial" href="{{ url_for("my_questions") }}">
+                    <div class="menu-item
+                    {% if request.path == url_for("my_questions") %}
+                     active
+                     {% endif %}
+">
+                        <h5>My Questions</h5>
+                    </div>
+                </a>
+
+            {% endif %}
         </div>
 
     </div>
